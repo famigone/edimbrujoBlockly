@@ -33,9 +33,19 @@ const INICIAR =  {
       },
     },
    generator: (block) => {
-      const message = `'${block.getFieldValue('ROL')}'` || '\'\'';
-      const code = `get edimbrujo.fi.uncoma.edu.ar/iniciar/ ${message}')`;
-      return [code, Blockly.JavaScript.ORDER_MEMBER];
+      const rol = `${block.getFieldValue('ROL')}` || '\'\'';
+      const jugador = 'Robot'
+      const equipo  = 'Frijoleros'
+      const url = 'http://edimbrujo.fi.uncoma.edu.ar/inicio'
+                +'?Jugador='+jugador
+                +'?Rol='+rol
+                +'?Equipo='+equipo    
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", url, false ); 
+      xmlHttp.send( null );
+      //return xmlHttp.responseText;      
+      const code = `${url}`;
+      return code;
     },
   }
 
@@ -103,13 +113,13 @@ const MOVER =  {
 
   const helloWorld =  {
     name: 'HelloWorld',
-    category: 'Demo',
+    category: 'Agente',
     block: {
       init: function () {
         this.jsonInit({
             nextStatement: null,
          // previousStatement: null,
-          message0: 'Hello %1',
+          message0: 'Alert %1',
           args0: [
             {
               type: 'field_input',
@@ -125,7 +135,7 @@ const MOVER =  {
     },
     generator: (block) => {
       const message = `'${block.getFieldValue('NAME')}'` || '\'\'';
-      const code = `console.log('Hello ${message}')`;
+      const code = `alert(${message})`;
       return [code, Blockly.JavaScript.ORDER_MEMBER];
     },
   };
@@ -177,7 +187,7 @@ shallowCompare(instance, nextProps, nextState) {
   <div className="col-8">
     
     <BlocklyDrawer
-      tools={[INICIAR, MOVER, ATACAR]}
+      tools={[INICIAR, MOVER, ATACAR, helloWorld]}
       language = {Blockly.Javascript}
       onChange={(code, workspace) => {
         this.handleCodex(code,workspace)
