@@ -148,6 +148,7 @@ class Bloques extends Component {
 handleCodex(codex, workspace){
   //console.log(this.state)
   this.setState({ code: codex, work: workspace});
+  this.props.notificar(codex);
 
 }
   
